@@ -1,6 +1,9 @@
 chcp 65001
 
-rd tmp /s
+if exist tmp (
+    rd tmp /s
+)
+
 
 : set /p v=[%date% %time%] 请输入版本号：
 
@@ -18,5 +21,3 @@ cd 7z
 cd ../tmp
 
 REN MiraiMCBE.zip MiraiMCBE.llplugin
-
-pause

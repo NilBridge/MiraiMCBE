@@ -24,7 +24,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 1
-    - run: /pack
+    - run: ./pack
     #上传Action文件
     - name: Upload Action File
       uses: actions/upload-artifact@v1.0.0
