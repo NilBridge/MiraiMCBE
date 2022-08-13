@@ -13,6 +13,7 @@
   "author": "NilDev",
   "license": "MIT",
   "dependencies": {
+    "log4js": "^6.6.1",
     "oicq": "^2.3.1"
   }
 }

@@ -1,9 +1,15 @@
 "use strict" //oicq需要开启严格模式
-const { createClient,  Client } = require('oicq');
-const logger = new NIL.Logger("QQManager");
+//LiteXLoader Dev Helper
+/// <reference path="c:\Users\amsq\.vscode\extensions\moxicat.lxldevhelper-0.1.8/Library/JS/Api.js" /> 
 
-if (NIL.IO.exists('./Data/QQ.json') == false) {
-    NIL.IO.WriteTo('./Data/QQ.json', '[]');
+const { createClient,  Client } = require('oicq');
+const {readFrom,WriteTo,exists,createDir} = require('./file');
+//const logger = new NIL.Logger("QQManager");
+
+if (exists('./plugins/MiraiMCBE/Data/QQ.json') == false) {
+    createDir('./plugins/MiraiMCBE');
+    createDir('./plugins/MiraiMCBE/data');
+    WriteTo('./plugins/MiraiMCBE/QQ.json', '[]');
 }
 
 const Clients = new Map();
@@ -15,7 +21,7 @@ function AddConfig(qq) {
         "platform": 2,
         "qrcode": true
     });
-    NIL.IO.WriteTo('./Data/QQ.json', JSON.stringify(bots, null, '\t'));
+    WriteTo('./plugins/MiraiMCBE/Data/QQ.json', JSON.stringify(bots, null, '\t'));
 }
 
 function addClient(qq) {
@@ -35,21 +41,15 @@ function addClient(qq) {
  * @param {*} qq 
  */
 function addOnEvent(client, qq) {
-    client.on("system.online", getOnRobotOnline(qq));
-    client.on('message.group',getOnMessage(qq));
-    client.on('notice.group.decrease', getOnMemeberLeft());
+    //client.on("system.online", getOnRobotOnline(qq));
+    //client.on('message.group',getOnMessage(qq));
+    //client.on('notice.group.decrease', getOnMemeberLeft());
 }
 
 function autoLogin(qq, pwd, platform, qrcode = true) {
     const client = createClient(qq, { platform, kickoff: false, ignore_self: true, resend: true, brief: true });
     Clients.set(qq, client);
     addOnEvent(client, qq);
-    client.on("system.login.slider", () => {
-        logger.warn(qq, '触发设备锁');
-        process.stdin.on("data", data => {
-            client.submitSlider(data);
-        })
-    });
     if (qrcode) {
         client.on("system.login.qrcode", function (e) {
             process.stdin.once("data", (e) => {
@@ -78,3 +78,5 @@ function logout(qq) {
 function logoutAll() {
     Clients.forEach((v, k) => { logout(k) });
 }
+
+module.exports = {autoLogin}
