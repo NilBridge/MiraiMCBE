@@ -1,0 +1,47 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: pack.bat
+    #上传Action文件
+    - name: Upload Action File
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: MiraiMCBE
+        path: tmp/MiraiMCBE.llplugin
+
+      #发布Github Release
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        name: v${{env.RELEASE_TAG}}
+        # body_path: ./CHANGELOG.md
+        files: |
+          tmp/MiraiMCBE.llplugin
+      env:
+          GITHUB_REPOSITORY: Nilbridge/MiraiMCBE
