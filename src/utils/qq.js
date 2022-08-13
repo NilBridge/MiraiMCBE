@@ -18,14 +18,14 @@ function AddConfig(qq) {
     bots.push({
         "qq": qq,
         "pwd": "1234567",
-        "platform": 2,
+        "platform": 3,
         "qrcode": true
     });
     WriteTo('./plugins/MiraiMCBE/Data/QQ.json', JSON.stringify(bots, null, '\t'));
 }
 
 function addClient(qq) {
-    const client = createClient(qq, { platform: 2, kickoff: false, ignore_self: true, resend: true, brief: true });
+    const client = createClient(qq, { platform: 3, kickoff: false, ignore_self: true, resend: true, brief: true });
     Clients.set(qq, client);
     client.on("system.login.qrcode", function (e) {
         process.stdin.once("data", (e) => {
@@ -79,4 +79,4 @@ function logoutAll() {
     Clients.forEach((v, k) => { logout(k) });
 }
 
-module.exports = {autoLogin}
+module.exports = {autoLogin,addClient,logout,getBot}
