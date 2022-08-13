@@ -25,10 +25,10 @@ MiraiMCBE 是一个基于 OICQ 的 LiteLoader 插件，能够让你在Minecraft�
 请按下面的步骤开始使用 MiraiMC：
 
 - 下载插件，并将插件文件放入 plugins 文件夹
-- 下载基于 MiraiMC 开发的其他插件（如果有的话），并将这些插件放入 plugins 文件夹
+- 下载基于 MiraiMCBE 开发的其他插件（如果有的话），并将这些插件放入 plugins 文件夹
     启动服务端（如果尚未启动）
 - 使用指令“/mirai login <账号>”登录你的机器人账号（可执行多次以登录多个机器人）
-- 如果你同时使用了基于MiraiMC开发的插件，请在这些插件的配置文件中调整有关 MiraiMC 的配置
+- 如果你同时使用了基于MiraiMC开发的插件，请在这些插件的配置文件中调整有关 MiraiMCBE 的配置
 - 享受优雅的 QQ 机器人服务！
 
 # 常见问题
