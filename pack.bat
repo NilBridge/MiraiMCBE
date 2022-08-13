@@ -11,6 +11,6 @@ md "tmp/MiraiMCBE"
 xcopy src "tmp/MiraiMCBE" /s /e /exclude:%cd%\pack.config
 : /exclude:%cd%\pack.config
 
-7z a tmp/MiraiMCBE.zip tmp/MiraiMCBE
+7z a tmp/MiraiMCBE.llplugin tmp/MiraiMCBE
 
 pause
