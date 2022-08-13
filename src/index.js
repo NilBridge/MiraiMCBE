@@ -1,7 +1,7 @@
 //LiteXLoader Dev Helper
 /// <reference path="c:\Users\amsq\.vscode\extensions\moxicat.lxldevhelper-0.1.8/Library/JS/Api.js" /> 
 
-const { addClient, autoLogin,getBot } = require('./utils/qq');
+const { addClient, autoLogin,getBot, logout } = require('./utils/qq');
 
 require('./utils/qq');
 
@@ -39,6 +39,7 @@ mc.listen("onServerStarted", () => {
             break;
         case "logout":
             out.success(`§a正在下线：§6${res.qq}`);
+            logout(res.qq);
             break;
         case "send":
             out.success(`§a正在向：§6${res.group}§a 发送 §e ${res.msg}`);
