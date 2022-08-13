@@ -61,3 +61,5 @@ mc.listen("onServerStarted", () => {
 process.on('unhandledRejection', (err) => {
     console.log(err);
 });
+
+module.exports = {getBot};
