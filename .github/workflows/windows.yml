@@ -20,12 +20,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      # 拉取代码
+    - uses: actions/checkout@v2
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        fetch-depth: 1
     - run: pack.bat
     #上传Action文件
     - name: Upload Action File
