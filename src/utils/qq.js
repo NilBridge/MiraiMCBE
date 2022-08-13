@@ -6,13 +6,19 @@ const { createClient,  Client } = require('oicq');
 const {readFrom,WriteTo,exists,createDir} = require('./file');
 //const logger = new NIL.Logger("QQManager");
 
-if (exists('./plugins/MiraiMCBE/Data/QQ.json') == false) {
+if (exists('./plugins/MiraiMCBE/QQ.json') == false) {
     createDir('./plugins/MiraiMCBE');
     createDir('./plugins/MiraiMCBE/data');
     WriteTo('./plugins/MiraiMCBE/QQ.json', '[]');
 }
 
+let bots = JSON.parse(readFrom('./plugins/MiraiMCBE/QQ.json'));
 const Clients = new Map();
+
+
+bots.forEach(q=>{
+    autoLogin(q.qq,q.pwd,q.platform,q.qrcode);
+});
 
 function AddConfig(qq) {
     bots.push({
@@ -27,6 +33,7 @@ function AddConfig(qq) {
 function addClient(qq) {
     const client = createClient(qq, { platform: 3, kickoff: false, ignore_self: true, resend: true, brief: true });
     Clients.set(qq, client);
+    client.logger.level = 'error';
     client.on("system.login.qrcode", function (e) {
         process.stdin.once("data", (e) => {
             this.login();

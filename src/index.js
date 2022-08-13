@@ -26,7 +26,7 @@ mc.listen("onServerStarted", () => {
   
     //注册指令
     cmd.overload(["ListAction"]);
-    cmd.overload(['SendAction','qq','msg']);
+    cmd.overload(['SendAction','qq','group','msg']);
     cmd.overload(["LoginAction", "qq"]);
     //cmd.overload(['AutoLoginAction','qq']);
 
@@ -41,17 +41,22 @@ mc.listen("onServerStarted", () => {
             out.success(`§a正在下线：§6${res.qq}`);
             break;
         case "send":
+            out.success(`§a正在向：§6${res.group}§a 发送 §e ${res.msg}`);
             getBot(res.qq).sendGroupMsg(res.group,res.msg);
             break;
         //帮助
         case "help":
-          out.success("§aGuild Bot Command");
-          out.success("§a/gbot guild §e获取公会列表");
-          out.success("§a/gbot channel <guild_id> §e获取公会频道列表");
-          out.success("§a/gbot member <guild_id> §e获取公会成员列表");
-          out.success("§a/gbot reload §e重载配置文件");
+          out.success("§aMiariMCBE Command");
+          out.success("§a/mirai login <qq> §e登录一个QQ");
+          out.success("§a/mirai logout <qq> §e下线一个QQ");
+          out.success("§a/mirai send <qq> <group> <msg> §e发送一条群消息");
           break;
       }
     });
     cmd.setup();
   });
+
+
+process.on('unhandledRejection', (err) => {
+    console.log(err);
+});
